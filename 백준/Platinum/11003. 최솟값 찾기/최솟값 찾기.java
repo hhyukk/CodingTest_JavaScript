@@ -6,28 +6,38 @@ import java.util.StringTokenizer;
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        // 출력을 버퍼에 넣고 한 번에 출력하기 위해 BufferedWriter 사용
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         StringTokenizer st = new StringTokenizer(br.readLine());
 
         int N = Integer.parseInt(st.nextToken());
         int L = Integer.parseInt(st.nextToken());
 
-        Deque<Integer> deque = new LinkedList<>();
-        int[] array = new int[N + 1];
+        Deque<Node> deque = new LinkedList<>();
         st = new StringTokenizer(br.readLine());
         for (int i = 1; i < N + 1; i++) {
-            array[i] = Integer.parseInt(st.nextToken());
+            int value = Integer.parseInt(st.nextToken());
 
-            while (!deque.isEmpty() && array[deque.peekLast()] > array[i]) {
+            while (!deque.isEmpty() && deque.peekLast().value > value) {
                 deque.pollLast();
             }
-            deque.offerLast(i);
-            if (deque.peekFirst() <= i - L) {
+            deque.offerLast(new Node(value, i));
+            if (deque.peekFirst().index <= i - L) {
                 deque.pollFirst();
             }
-            bw.write(array[deque.peekFirst()] + " ");
+            bw.write(deque.peekFirst().value + " ");
         }
         bw.flush();
         bw.close();
+    }
+
+    static class Node {
+        public int value;
+        public int index;
+
+        Node(int value, int index) {
+            this.value = value;
+            this.index = index;
+        }
     }
 }
