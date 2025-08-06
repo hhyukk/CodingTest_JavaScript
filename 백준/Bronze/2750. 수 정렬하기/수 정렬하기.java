@@ -13,17 +13,24 @@ public class Main {
             arr[i] = Integer.parseInt(br.readLine());
         }
 
+        // 버블 정렬
         for (int i = 0; i < N - 1; i++) {
+            boolean swapped = false;
             for (int j = 0; j < N - 1 - i; j++) {
                 if (arr[j] > arr[j + 1]) {
+                    // swap
                     int temp = arr[j];
                     arr[j] = arr[j + 1];
                     arr[j + 1] = temp;
+                    swapped = true;
                 }
             }
+            if (!swapped) break; // 정렬 완료 시 조기 종료
         }
-        for (int i = 0; i < N; i++) {
-            System.out.println(arr[i]);
+        StringBuilder sb = new StringBuilder();
+        for (int value : arr) {
+            sb.append(value + "\n");
         }
+        System.out.println(sb);
     }
 }
